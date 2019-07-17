@@ -21,6 +21,8 @@ import java.util.List;
 public class CrimeConstituentInfoTest {
     @Autowired
     private CrimeConstituentInfoRepository crimeConstituentInfoRepository;
+    @Autowired
+    private CaseRepository caseRepository;
     @Test
     public void test_should_add_crime_constituent_info_to_crime_constituent_List_when_save_a_crime_constituent() {
         //given
@@ -48,5 +50,17 @@ public class CrimeConstituentInfoTest {
         //then
         Assertions.assertEquals("bbbb", resultCrimeConstituentInfo.getObjectiveRequirement());
         Assertions.assertEquals("bbbb", resultCrimeConstituentInfo.getSubjectiveRequirement());
+    }
+
+    @Test
+    public void test_shoule_get_basic_information_specific_information_of_each_case_one_to_one_when_find_correspond_case_and_crime_constituent_info() {
+        //given
+        Case caseA = new Case("CaseA", new Date().getTime(),new CrimeConstituentInfo("subjectA","objectA"));
+        //when
+        caseRepository.save(caseA);
+        //then
+        Assertions.assertEquals("subjectA", caseRepository.findById(1L).get().getCrimeConstituentInfo().getSubjectiveRequirement());
+        Assertions.assertEquals("objectA", caseRepository.findById(1L).get().getCrimeConstituentInfo().getObjectiveRequirement());
+
     }
 }

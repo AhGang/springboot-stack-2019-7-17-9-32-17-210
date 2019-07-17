@@ -19,6 +19,12 @@ public class Case {
         this.time = time;
     }
 
+    public Case(String caseName, Long time, CrimeConstituentInfo crimeConstituentInfo) {
+        this.caseName = caseName;
+        this.time = time;
+        this.crimeConstituentInfo = crimeConstituentInfo;
+    }
+
     public String getCaseName() {
         return caseName;
     }
