@@ -23,16 +23,44 @@ public class CaseTest {
     @Autowired
     private CaseRepository caseRepository;
 	@Test
-    public void test_should_add_CaseA_to_CaseList_when_save_a_case() {
+    public void test_should_add_caseA_to_caseList_when_save_a_case() {
         //given
         Case caseA = new Case("CaseA", new Date().getTime());
         caseRepository.saveAndFlush(caseA);
         //when
         List<Case> caseList = caseRepository.findAll();
-        //then
 
         //then
         Assertions.assertEquals(1, caseList.size());
     }
+    @Test
+    public void test_get_specific_case_detail_when_give_a_specific_case_id() {
+        //given
+        Case caseA = new Case("CaseA", new Date().getTime());
+        Case caseB = new Case("CaseB", new Date().getTime());
+        Case caseC = new Case("CaseC", new Date().getTime());
+        caseRepository.saveAndFlush(caseA);
+        caseRepository.saveAndFlush(caseB);
+        caseRepository.saveAndFlush(caseC);
+        //when
+        Case resultCase = caseRepository.findById(2L).get();
+        //then
 
+        //then
+        Assertions.assertEquals("CaseB", resultCase.getCaseName());
+    }
+    @Test
+    public void test_should_get_cases_order_by_date_asc_when_find_cases_order_by_date_asc_(){
+        //given
+        Case caseA = new Case("CaseA", new Date().getTime());
+        Case caseB = new Case("CaseB", new Date().getTime());
+        Case caseC = new Case("CaseC", new Date().getTime());
+        caseRepository.saveAndFlush(caseA);
+        caseRepository.saveAndFlush(caseB);
+        caseRepository.saveAndFlush(caseC);
+        //when
+        List<Case> caseList = caseRepository.findByOrderByTimeAsc();
+        //then
+        Assertions.assertEquals("CaseB",caseList.get(1).getCaseName());
+    }
 }
