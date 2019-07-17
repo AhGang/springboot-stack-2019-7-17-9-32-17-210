@@ -1,6 +1,7 @@
 package com.tw.apistackbase;
 
 import com.tw.apistackbase.entity.Case;
+import com.tw.apistackbase.entity.Procuratorate;
 import com.tw.apistackbase.entity.Prosecutor;
 import com.tw.apistackbase.repository.CaseRepository;
 import com.tw.apistackbase.repository.ProcuratorateRepository;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,6 +22,8 @@ import java.util.List;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class ProsecutorTest {
+    @Autowired
+    private ProcuratorateRepository procuratorateRepository;
     @Autowired
     private ProsecutorRepository prosecutorRepository;
     @Autowired
@@ -47,8 +51,26 @@ public class ProsecutorTest {
         //when
         Prosecutor resultProsecutor = prosecutorRepository.findById(2L).get();
         //then
+        Assertions.assertEquals("ProsecutorB", resultProsecutor.getName());
+    }
+    @Test
+    public void test_get_all_prosecutors_from_a_procuratorate_when_give_a_specific_procuratorate() {
+        //given
+        Prosecutor ProsecutorA = new Prosecutor("ProsecutorA");
+        Prosecutor ProsecutorB = new Prosecutor("ProsecutorB");
+        List<Prosecutor> prosecutorsA = new ArrayList<>();
+        prosecutorsA.add(ProsecutorA);
+        List<Prosecutor> prosecutorsB = new ArrayList<>();
+        prosecutorsB.add(ProsecutorB);
+        Procuratorate procuratorateA = new Procuratorate("A",prosecutorsA);
+        Procuratorate procuratorateB = new Procuratorate("B",prosecutorsB);
+        //when
+        procuratorateRepository.save(procuratorateA);
+        procuratorateRepository.save(procuratorateB);
+        List<Procuratorate> procuratorateList = procuratorateRepository.findAll();
 
         //then
-        Assertions.assertEquals("ProsecutorB", resultProsecutor.getName());
+        Assertions.assertEquals("ProsecutorA", procuratorateList.get(0).getProsecutors().get(0).getName());
+        Assertions.assertEquals("ProsecutorB", procuratorateList.get(1).getProsecutors().get(0).getName());
     }
 }
