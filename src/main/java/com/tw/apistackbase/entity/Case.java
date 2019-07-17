@@ -11,12 +11,13 @@ public class Case {
     private String caseName;
     @Column(nullable = false)
     private Long time;
+    @OneToOne(cascade = CascadeType.ALL)
+    private CrimeConstituentInfo crimeConstituentInfo;
 
     public Case(String caseName, Long time) {
         this.caseName = caseName;
         this.time = time;
     }
-
 
     public String getCaseName() {
         return caseName;
@@ -33,5 +34,11 @@ public class Case {
     public void setTime(Long time) {
         this.time = time;
     }
+    public CrimeConstituentInfo getCrimeConstituentInfo() {
+        return crimeConstituentInfo;
+    }
 
+    public void setCrimeConstituentInfo(CrimeConstituentInfo crimeConstituentInfo) {
+        this.crimeConstituentInfo = crimeConstituentInfo;
+    }
 }
