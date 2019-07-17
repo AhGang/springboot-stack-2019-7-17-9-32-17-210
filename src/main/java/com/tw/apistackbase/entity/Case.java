@@ -14,6 +14,8 @@ public class Case {
     @OneToOne(cascade = CascadeType.ALL)
     private CrimeConstituentInfo crimeConstituentInfo;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Procuratorate procuratorate;
     public Case(String caseName, Long time) {
         this.caseName = caseName;
         this.time = time;
@@ -23,6 +25,13 @@ public class Case {
         this.caseName = caseName;
         this.time = time;
         this.crimeConstituentInfo = crimeConstituentInfo;
+    }
+
+    public Case(String caseName, Long time, CrimeConstituentInfo crimeConstituentInfo, Procuratorate procuratorate) {
+        this.caseName = caseName;
+        this.time = time;
+        this.crimeConstituentInfo = crimeConstituentInfo;
+        this.procuratorate = procuratorate;
     }
 
     public String getCaseName() {
@@ -46,5 +55,13 @@ public class Case {
 
     public void setCrimeConstituentInfo(CrimeConstituentInfo crimeConstituentInfo) {
         this.crimeConstituentInfo = crimeConstituentInfo;
+    }
+
+    public Procuratorate getProcuratorate() {
+        return procuratorate;
+    }
+
+    public void setProcuratorate(Procuratorate procuratorate) {
+        this.procuratorate = procuratorate;
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 @RunWith(SpringRunner.class)
@@ -22,6 +23,8 @@ import java.util.List;
 public class ProcuratorateTest {
     @Autowired
     private ProcuratorateRepository procuratorateRepository;
+    @Autowired
+    private CaseRepository caseRepository;
 
     @Test
     public void test_should_add_procuratorate_when_save_a_procuratorate() {
@@ -50,5 +53,15 @@ public class ProcuratorateTest {
 
         //then
         Assertions.assertEquals("B", resultProcuratorate.getName());
+    }
+    @Test
+    public void test_should_get_case_and_procuratorate_each_case_one_to_one_when_find_correspond_case_and_procuratorate() {
+        //given
+        Case caseA = new Case("CaseA", new Date().getTime(),new CrimeConstituentInfo("subjectA","objectA"),new Procuratorate("C"));
+        //when
+        caseRepository.save(caseA);
+        //then
+        Assertions.assertEquals("C", caseRepository.findById(1L).get().getProcuratorate().getName());
+
     }
 }
