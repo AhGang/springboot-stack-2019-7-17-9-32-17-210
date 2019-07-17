@@ -78,5 +78,20 @@ public class CaseTest {
         Assertions.assertEquals("CaseA",caseList.get(0).getCaseName());
         Assertions.assertEquals("CaseA",caseList.get(1).getCaseName());
     }
+    @Test
+    public void test_should_delete_specific_case_by_give_a_specific_id(){
+        //given
+        Case caseA = new Case("CaseA", new Date().getTime());
+        Case caseB = new Case("CaseB", new Date().getTime());
+        Case caseC = new Case("CaseC", new Date().getTime());
+        caseRepository.saveAndFlush(caseA);
+        caseRepository.saveAndFlush(caseB);
+        caseRepository.saveAndFlush(caseC);
+        //when
+        caseRepository.deleteCaseById(1);
+        //then
+        List<Case> caseList = caseRepository.findAll();
+        Assertions.assertEquals("CaseB",caseList.get(0).getCaseName());
+    }
 
 }
