@@ -63,4 +63,20 @@ public class CaseTest {
         //then
         Assertions.assertEquals("CaseB",caseList.get(1).getCaseName());
     }
+    @Test
+    public void test_should_get_specific_case_by_same_case_name_when_find_cases__by_name_(){
+        //given
+        Case caseA = new Case("CaseA", new Date().getTime());
+        Case caseB = new Case("CaseB", new Date().getTime());
+        Case caseAA = new Case("CaseA", new Date().getTime());
+        caseRepository.saveAndFlush(caseA);
+        caseRepository.saveAndFlush(caseB);
+        caseRepository.saveAndFlush(caseAA);
+        //when
+        List<Case> caseList = caseRepository.findCasesByCaseName("CaseA");
+        //then
+        Assertions.assertEquals("CaseA",caseList.get(0).getCaseName());
+        Assertions.assertEquals("CaseA",caseList.get(1).getCaseName());
+    }
+
 }

@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface CaseRepository extends JpaRepository<Case, Long> {
     List<Case> findByOrderByTimeAsc();
+    List<Case> findCasesByCaseName(String caseName);
 
 }
