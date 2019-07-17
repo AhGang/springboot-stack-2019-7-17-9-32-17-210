@@ -12,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,7 +55,7 @@ public class CrimeConstituentInfoTest {
     }
 
     @Test
-    public void test_shoule_get_basic_information_specific_information_of_each_case_one_to_one_when_find_correspond_case_and_crime_constituent_info() {
+    public void test_should_get_basic_information_specific_information_of_each_case_one_to_one_when_find_correspond_case_and_crime_constituent_info() {
         //given
         Case caseA = new Case("CaseA", new Date().getTime(),new CrimeConstituentInfo("subjectA","objectA"));
         //when
@@ -61,6 +63,28 @@ public class CrimeConstituentInfoTest {
         //then
         Assertions.assertEquals("subjectA", caseRepository.findById(1L).get().getCrimeConstituentInfo().getSubjectiveRequirement());
         Assertions.assertEquals("objectA", caseRepository.findById(1L).get().getCrimeConstituentInfo().getObjectiveRequirement());
+
+    }
+    @Test
+    public void test_should_add_specific_information_in_criminal_case_when_case_belongs_to_criminal_case() {
+        //given
+        Case normalCaseA = new Case("normal", new Date().getTime());
+        Case criminalCase = new Case("criminal", new Date().getTime());
+        CrimeConstituentInfo crimeConstituentInfo = new CrimeConstituentInfo("subjectA","objectA");
+        List<Case> caseList = new ArrayList<>();
+        caseList.add(normalCaseA);
+        caseList.add(criminalCase);
+        caseRepository.save(normalCaseA);
+        caseRepository.save(criminalCase);
+        //when
+        for(int i = 0;i<caseList.size();i++){
+            if(caseList.get(i).getCaseName()=="criminal"){
+                caseList.get(i).setCrimeConstituentInfo(crimeConstituentInfo);
+                caseRepository.save(caseList.get(i));
+            }
+        }
+        //then
+        Assertions.assertEquals("subjectA", caseRepository.findById(1L).get().getCrimeConstituentInfo().getSubjectiveRequirement());
 
     }
 }
