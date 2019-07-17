@@ -32,4 +32,21 @@ public class CrimeConstituentInfoTest {
         //then
         Assertions.assertEquals(1, crimeConstituentInfoList.size());
     }
+    @Test
+    public void test_get_specific_case_detail_when_give_a_specific_case_id() {
+        //given
+        CrimeConstituentInfo crimeConstituentInfoA = new CrimeConstituentInfo("aaaa","aaaa");
+        CrimeConstituentInfo crimeConstituentInfoB= new CrimeConstituentInfo("bbbb","bbbb");
+        CrimeConstituentInfo crimeConstituentInfoC= new CrimeConstituentInfo("cccc","cccc");
+        crimeConstituentInfoRepository.saveAndFlush(crimeConstituentInfoA);
+        crimeConstituentInfoRepository.saveAndFlush(crimeConstituentInfoB);
+        crimeConstituentInfoRepository.saveAndFlush(crimeConstituentInfoC);
+        //when
+        CrimeConstituentInfo resultCrimeConstituentInfo = crimeConstituentInfoRepository.findById(2L).get();
+        //then
+
+        //then
+        Assertions.assertEquals("bbbb", resultCrimeConstituentInfo.getObjectiveRequirement());
+        Assertions.assertEquals("bbbb", resultCrimeConstituentInfo.getSubjectiveRequirement());
+    }
 }
