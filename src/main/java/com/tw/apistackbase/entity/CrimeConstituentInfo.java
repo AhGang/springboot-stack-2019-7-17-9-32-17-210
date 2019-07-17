@@ -17,6 +17,9 @@ public class CrimeConstituentInfo {
         this.objectiveRequirement = objectiveRequirement;
     }
 
+    public CrimeConstituentInfo() {
+    }
+
     public String getSubjectiveRequirement() {
         return subjectiveRequirement;
     }

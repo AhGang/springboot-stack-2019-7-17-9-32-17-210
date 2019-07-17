@@ -84,7 +84,7 @@ public class CrimeConstituentInfoTest {
             }
         }
         //then
-        Assertions.assertEquals("subjectA", caseRepository.findById(1L).get().getCrimeConstituentInfo().getSubjectiveRequirement());
+        Assertions.assertEquals("subjectA", caseRepository.findById(2L).get().getCrimeConstituentInfo().getSubjectiveRequirement());
 
     }
 }
