@@ -4,6 +4,7 @@ import com.tw.apistackbase.entity.Case;
 import com.tw.apistackbase.repository.CaseRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
