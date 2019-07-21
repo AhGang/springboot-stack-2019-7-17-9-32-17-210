@@ -42,26 +42,24 @@ public class ProcuratorateTest {
 
         //given
         Procuratorate procuratorateA = new Procuratorate("A");
-        Procuratorate procuratorateB = new Procuratorate("B");
-        Procuratorate procuratorateC = new Procuratorate("C");
-        procuratorateRepository.saveAndFlush(procuratorateA);
-        procuratorateRepository.saveAndFlush(procuratorateB);
-        procuratorateRepository.saveAndFlush(procuratorateC);
+
+        Procuratorate savedProcuratorateA =  procuratorateRepository.saveAndFlush(procuratorateA);
+
         //when
-        Procuratorate resultProcuratorate = procuratorateRepository.findById(2L).get();
+        Procuratorate resultProcuratorate = procuratorateRepository.findById(savedProcuratorateA.getId()).get();
         //then
 
         //then
-        Assertions.assertEquals("B", resultProcuratorate.getName());
+        Assertions.assertEquals(procuratorateA.getName(), resultProcuratorate.getName());
     }
     @Test
-    public void test_should_get_case_and_procuratorate_each_case_one_to_one_when_find_correspond_case_and_procuratorate() {
+    public void test_should_add_case_in_procuratorate_when_find_correspond_case_and_procuratorate() {
         //given
         Case caseA = new Case("CaseA", new Date().getTime(),new CrimeConstituentInfo("subjectA","objectA"),new Procuratorate("C"));
         //when
-        caseRepository.save(caseA);
+        Case savedCaseA = caseRepository.save(caseA);
         //then
-        Assertions.assertEquals("C", caseRepository.findById(1L).get().getProcuratorate().getName());
+        Assertions.assertEquals(caseA.getProcuratorate().getName(), caseRepository.findById(savedCaseA.getId()).get().getProcuratorate().getName());
 
     }
 }

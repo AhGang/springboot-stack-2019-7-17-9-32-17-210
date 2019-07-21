@@ -35,4 +35,8 @@ public class CrimeConstituentInfo {
     public void setObjectiveRequirement(String objectiveRequirement) {
         this.objectiveRequirement = objectiveRequirement;
     }
+    public Long getId() {
+        return id;
+    }
+
 }

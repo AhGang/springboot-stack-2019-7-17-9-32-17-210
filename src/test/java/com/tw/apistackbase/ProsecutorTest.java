@@ -43,15 +43,12 @@ public class ProsecutorTest {
     public void test_get_specific_prosecutor_detail_when_give_a_specific_prosecutor_id() {
         //given
         Prosecutor ProsecutorA = new Prosecutor("ProsecutorA");
-        Prosecutor ProsecutorB = new Prosecutor("ProsecutorB");
-        Prosecutor ProsecutorC = new Prosecutor("ProsecutorC");
-        prosecutorRepository.saveAndFlush(ProsecutorA);
-        prosecutorRepository.saveAndFlush(ProsecutorB);
-        prosecutorRepository.saveAndFlush(ProsecutorC);
+
+        Prosecutor savedProsecutorA =  prosecutorRepository.saveAndFlush(ProsecutorA);
         //when
-        Prosecutor resultProsecutor = prosecutorRepository.findById(2L).get();
+        Prosecutor resultProsecutor = prosecutorRepository.findById(savedProsecutorA.getId()).get();
         //then
-        Assertions.assertEquals("ProsecutorB", resultProsecutor.getName());
+        Assertions.assertEquals(ProsecutorA.getName(), resultProsecutor.getName());
     }
     @Test
     public void test_get_all_prosecutors_from_a_procuratorate_when_give_a_specific_procuratorate() {

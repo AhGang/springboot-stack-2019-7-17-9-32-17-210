@@ -5,6 +5,10 @@ import java.util.List;
 
 @Entity
 public class Procuratorate {
+    public Long getId() {
+        return id;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

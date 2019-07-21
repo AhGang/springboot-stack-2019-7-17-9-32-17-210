@@ -14,7 +14,7 @@ public class Case {
     @OneToOne(cascade = CascadeType.ALL)
     private CrimeConstituentInfo crimeConstituentInfo;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     private Procuratorate procuratorate;
     public Case(String caseName, Long time) {
         this.caseName = caseName;
@@ -63,5 +63,8 @@ public class Case {
 
     public void setProcuratorate(Procuratorate procuratorate) {
         this.procuratorate = procuratorate;
+    }
+    public Long getId() {
+        return id;
     }
 }

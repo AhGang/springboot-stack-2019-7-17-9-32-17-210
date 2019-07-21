@@ -40,18 +40,14 @@ public class CrimeConstituentInfoTest {
     public void test_get_specific_case_detail_when_give_a_specific_case_id() {
         //given
         CrimeConstituentInfo crimeConstituentInfoA = new CrimeConstituentInfo("aaaa","aaaa");
-        CrimeConstituentInfo crimeConstituentInfoB= new CrimeConstituentInfo("bbbb","bbbb");
-        CrimeConstituentInfo crimeConstituentInfoC= new CrimeConstituentInfo("cccc","cccc");
-        crimeConstituentInfoRepository.saveAndFlush(crimeConstituentInfoA);
-        crimeConstituentInfoRepository.saveAndFlush(crimeConstituentInfoB);
-        crimeConstituentInfoRepository.saveAndFlush(crimeConstituentInfoC);
+        CrimeConstituentInfo savedCrimeConstituentInfoA = crimeConstituentInfoRepository.saveAndFlush(crimeConstituentInfoA);
         //when
-        CrimeConstituentInfo resultCrimeConstituentInfo = crimeConstituentInfoRepository.findById(2L).get();
+        CrimeConstituentInfo resultCrimeConstituentInfo = crimeConstituentInfoRepository.findById(savedCrimeConstituentInfoA.getId()).get();
         //then
 
         //then
-        Assertions.assertEquals("bbbb", resultCrimeConstituentInfo.getObjectiveRequirement());
-        Assertions.assertEquals("bbbb", resultCrimeConstituentInfo.getSubjectiveRequirement());
+        Assertions.assertEquals("aaaa", resultCrimeConstituentInfo.getObjectiveRequirement());
+        Assertions.assertEquals("aaaa", resultCrimeConstituentInfo.getSubjectiveRequirement());
     }
 
     @Test
@@ -59,23 +55,23 @@ public class CrimeConstituentInfoTest {
         //given
         Case caseA = new Case("CaseA", new Date().getTime(),new CrimeConstituentInfo("subjectA","objectA"));
         //when
-        caseRepository.save(caseA);
+        Case savedCaseA = caseRepository.save(caseA);
         //then
-        Assertions.assertEquals("subjectA", caseRepository.findById(1L).get().getCrimeConstituentInfo().getSubjectiveRequirement());
-        Assertions.assertEquals("objectA", caseRepository.findById(1L).get().getCrimeConstituentInfo().getObjectiveRequirement());
+        Assertions.assertEquals("subjectA", savedCaseA.getCrimeConstituentInfo().getSubjectiveRequirement());
+        Assertions.assertEquals("objectA", savedCaseA.getCrimeConstituentInfo().getObjectiveRequirement());
 
     }
     @Test
     public void test_should_add_specific_information_in_criminal_case_when_case_belongs_to_criminal_case() {
         //given
-        Case normalCaseA = new Case("normal", new Date().getTime());
+        Case normalCase = new Case("normal", new Date().getTime());
         Case criminalCase = new Case("criminal", new Date().getTime());
         CrimeConstituentInfo crimeConstituentInfo = new CrimeConstituentInfo("subjectA","objectA");
         List<Case> caseList = new ArrayList<>();
-        caseList.add(normalCaseA);
+        caseList.add(normalCase);
         caseList.add(criminalCase);
-        caseRepository.save(normalCaseA);
-        caseRepository.save(criminalCase);
+        Case savedNormalCase = caseRepository.save(normalCase);
+        Case savedCriminalCase = caseRepository.save(criminalCase);
         //when
         for(int i = 0;i<caseList.size();i++){
             if(caseList.get(i).getCaseName()=="criminal"){
@@ -84,7 +80,7 @@ public class CrimeConstituentInfoTest {
             }
         }
         //then
-        Assertions.assertEquals("subjectA", caseRepository.findById(2L).get().getCrimeConstituentInfo().getSubjectiveRequirement());
+        Assertions.assertEquals("subjectA", caseRepository.findById(savedCriminalCase.getId()).get().getCrimeConstituentInfo().getSubjectiveRequirement());
 
     }
 }
